@@ -11,7 +11,9 @@ WORKDIR /app
 COPY package*.json ./
 
 # Install all dependencies (including devDependencies needed for the build step)
-RUN npm ci
+# Use --ignore-scripts to skip the "prepare" lifecycle script which runs "npm run build"
+# before tsconfig.json and src/ are available. The build is done explicitly below.
+RUN npm ci --ignore-scripts
 
 # Copy TypeScript config and source
 COPY tsconfig.json ./
